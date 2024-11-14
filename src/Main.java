@@ -1,10 +1,9 @@
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-
-        LocalDate todaysDate = LocalDate.now();
-
 //        System.out.println("Datum idag " + todaysDate);
         new UserInterface();
     }
@@ -17,16 +16,6 @@ public class Main {
 // En klass för min JFrame och EventListener
 // setToolTip <-- Använd
 // Använda FlowLayout, BorderLayout eller GridLayout?
-
-// JFrame-Mitt fönster
-
-// JPanel Panel där jag ska gruppera komponenter. Panel kan jag använda för att skapa olika sektioner och strukturera min layout
-
-// JLabel Etikett för att visa texter eller bilder i mitt gränssnitt. Typ en enkel komponent för att visa statisk information
-
-// JTextField- DÄr användaren ska mata in information
-
-// JTextArea Där tillåts flera rader
 
 //Huvudklassen (Main): Här sätter du upp fönstret (JFrame), och det är härifrån programmet startas.
 //GUI-klassen: Skapa en separat klass för att hantera all GUI-uppbyggnad (t.ex. lägga till knappar, paneler och andra komponenter). Denna klass ansvarar för att skapa och sätta upp fönstret och komponenterna.
