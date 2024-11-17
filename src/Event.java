@@ -1,16 +1,6 @@
-import javax.swing.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class Event {
 
     private String event;
-
-    HashMap<String, Event> list = new HashMap();
-
-//    ArrayList<JTextField> newEvent;
-//    ArrayList<JTextArea> events;
 
     // Konstruktor ett event
     public Event(String event) {
@@ -33,17 +23,3 @@ public class Event {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-// Här vill jag kunna se Event
-// Skapa Event
-// Hämta Event
-// Ta bort Event
