@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class UserInterface {
-
     // Samla mina event
-    private static EnumMap<Day, ArrayList<Event>> eventEachDay = new EnumMap<>(Day.class);
+    private static EnumMap<Day, ArrayList<Event>> todaysEvent = new EnumMap<>(Day.class);
     private int startDay = 0;
 
     Calendar calendar = new Calendar();
@@ -25,11 +24,20 @@ public class UserInterface {
         frame.setVisible(true);
     }
 
+    // Metod för att spara eventen
+    public static void saveEvent(Day weekday, Event newEvent){
+        if(!todaysEvent.containsKey(weekday)){
+            todaysEvent.put(weekday, new ArrayList<>());
+        }
+        todaysEvent.get(weekday).add(newEvent);
+    }
+
     // Metod för att skapa min ram till själva kalendern
     private void createFrame(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1500, 800);
         frame.setLayout(new GridLayout(1,7,10,10));
+        frame.getContentPane().setBackground(Color.lightGray);
     }
 
     // Metod för att visa veckodagarna
@@ -45,14 +53,6 @@ public class UserInterface {
             frame.add(panel);
             startDay++;
         }
-    }
-
-    // Metod för att skapa event
-    public static void createEvent(Day weekday, Event newEvent){
-        if(!eventEachDay.containsKey(weekday)){
-            eventEachDay.put(weekday, new ArrayList<>());
-        }
-        eventEachDay.get(weekday).add(newEvent);
     }
 
     // Metod för att färglägga den kolumnen som representerar dagens datum

@@ -5,107 +5,86 @@ import java.time.format.DateTimeFormatter;
 
 public class Calendar {
 
+    EventInterface eventInterface = new EventInterface();
+
+    // Metod för att skapa panelen för kalendern
     public JPanel createWeekDayPanel(Day weekDay, LocalDate date){
-        // Mina paneler för veckodagarna
-        JPanel panel = new JPanel();
+        JPanel panel = createPanel();
 
-        // Label för namn på veckodagarna
         JLabel weekdayNameLabel = new JLabel(weekDay.toString(), SwingConstants.CENTER);
-
-        // Label för datum på veckodagarna
         JLabel todaysDateLabel = new JLabel(dateToDisplay(date), SwingConstants.CENTER);
 
-        // TextArea där det printas ut olika händelser
-        JTextArea textArea = new JTextArea();
+        JTextArea textArea = createTextArea();
+        JButton button = createButton();
+        createDayAndDateLabel(weekdayNameLabel, todaysDateLabel,weekDay);
 
-        // TextField där man skriver in en ny händelse
-        JTextField textField = new JTextField();
-
-        // Button för att kunna lägga till en ny händelse i kalendern
-        JButton button = new JButton("Add Event");
-
-        // Mina metoder där jag skapar min kallender
-        createPanel(panel);
-        createDayAndDateLabel(weekdayNameLabel, todaysDateLabel);
-        createTextArea(textArea);
-        createTextField(textField);
-        createButton(button);
-        buttonAction(button, textField, textArea, weekDay);
-
-        addPanel(panel,weekdayNameLabel,todaysDateLabel,textArea,textField,button);
+        buttonAction(button, textArea, weekDay);
+        addPanel(panel,weekdayNameLabel,todaysDateLabel,textArea,button);
 
         return panel;
-
     }
 
     // Metod där jag skapar min panel
-    private void createPanel(JPanel panel) {
+    private JPanel createPanel()  {
+        JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,3,true));
         panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+
+        return panel;
     }
+
     // Metod för att att skapa min label för att visa Dag och datum
-    private void createDayAndDateLabel(JLabel weekdayNameLabel, JLabel todaysDateLabel){
-        weekdayNameLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+    private void createDayAndDateLabel(JLabel weekdayNameLabel, JLabel todaysDateLabel, Day weekDay) {
+        weekdayNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         weekdayNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Loop för att markera lite tydligare vilka dagar som är helg
+        if(weekDay.getDayType().equalsIgnoreCase("Weekend")){
+            weekdayNameLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+            weekdayNameLabel.setOpaque(true);
+        }
 
         todaysDateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     // Metod för att skapa textarea
-    private void createTextArea(JTextArea textArea){
+    private JTextArea createTextArea(){
+        JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setPreferredSize(new Dimension(200,100));
-    }
 
-    // Metod för att skapa textfields
-    private void createTextField(JTextField textField){
-        textField.setToolTipText("Type in the event you want to add!");
-        textField.setMaximumSize(new Dimension(150,20));
-        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        return textArea;
     }
 
     // Metod för att skapa knappar
-    private void createButton(JButton button){
+    private JButton createButton(){
+        JButton button = new JButton("Add event");
         button.setMaximumSize(new Dimension(150,20));
         button.setBackground(new Color(30, 144, 255));
         button.setForeground(Color.WHITE);
-        button.setToolTipText("Add Event");
-        button.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
+        button.setToolTipText("Create Event");
+        button.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,false));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        return button;
     }
 
     // Actionlistener för mina knappar
-    private void buttonAction(JButton button, JTextField textField, JTextArea textArea, Day weekDay){
+    private void buttonAction(JButton button, JTextArea textArea, Day weekDay){
         button.addActionListener(e -> {
-            // Hämtar texten från min textfield
-            String newEventText = textField.getText();
-            if(!newEventText.isEmpty()){
-                Event newEvent = new Event(newEventText);
-                UserInterface.createEvent(weekDay, newEvent);
-                // Lägg till texten
-                textArea.append(newEventText + "\n");
-                JOptionPane.showMessageDialog(null, textField.getText() + " added to calendar!");
-                // Rensa texten
-                textField.setText("");
-            }
-            else{
-                // Pop upp om textField är tomt
-                JOptionPane.showMessageDialog(null, "Please type an event!");
-            }
+            // Öppnar upp mitt nya fönster för event
+                eventInterface.eventWindow(textArea, weekDay);
         });
     }
 
     // Metod där jag lägger till allt i panelen samtidigt som jag sätter lite mellanrum för att göra det snyggare
-    private void addPanel(JPanel panel, JLabel weekdayNameLabel, JLabel todaysDateLabel,JTextArea textArea,JTextField textField,JButton button){
+    private void addPanel(JPanel panel, JLabel weekdayNameLabel, JLabel todaysDateLabel,JTextArea textArea,JButton button){
         panel.add(Box.createVerticalStrut(10));
         panel.add(weekdayNameLabel);
         panel.add(Box.createVerticalStrut(10));
         panel.add(todaysDateLabel);
         panel.add(Box.createVerticalStrut(30));
         panel.add(textArea);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(textField);
         panel.add(Box.createVerticalStrut(10));
         panel.add(button);
         panel.add(Box.createVerticalStrut(10));
