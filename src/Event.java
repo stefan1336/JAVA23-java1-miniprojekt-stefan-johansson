@@ -12,11 +12,6 @@ public class Event {
         return event;
     }
 
-    // Skapa event
-    public void setEvent(String event) {
-        this.event = event;
-    }
-
     @Override
     public String toString() {
         return event;

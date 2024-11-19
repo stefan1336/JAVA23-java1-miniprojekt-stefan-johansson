@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Calendar {
 
-    EventInterface eventInterface = new EventInterface();
-
     // Metod för att skapa panelen för kalendern
     public JPanel createWeekDayPanel(Day weekDay, LocalDate date){
         JPanel panel = createPanel();
@@ -38,12 +36,12 @@ public class Calendar {
         weekdayNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         weekdayNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Loop för att markera lite tydligare vilka dagar som är helg
+        // Loop för att markera lite tydligare vilka dagar som är helg genom att ge den dagen fet stil.
+        // Kollar veckodagen med gettern från Day-enum om dagen innehåller Weekend.
         if(weekDay.getDayType().equalsIgnoreCase("Weekend")){
             weekdayNameLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
             weekdayNameLabel.setOpaque(true);
         }
-
         todaysDateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
@@ -69,11 +67,12 @@ public class Calendar {
         return button;
     }
 
-    // Actionlistener för mina knappar
+    // Actionlistener för mina knappar.
+    // När man klickar på knappen körs klassen eventWindow i EventerInterFace klassen.
     private void buttonAction(JButton button, JTextArea textArea, Day weekDay){
         button.addActionListener(e -> {
             // Öppnar upp mitt nya fönster för event
-                eventInterface.eventWindow(textArea, weekDay);
+                EventInterface.eventWindow(textArea, weekDay);
         });
     }
 
@@ -90,7 +89,8 @@ public class Calendar {
         panel.add(Box.createVerticalStrut(10));
     }
 
-    // Metod för att visa Dagens datum samt månad
+    // Metod för att visa Dagens datum samt månad.
+    // Här skickas datumet med som man formaterar om för att bara visa dag och månad
     private String dateToDisplay(LocalDate date){
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd MMMM");
         return date.format(formatDate);
