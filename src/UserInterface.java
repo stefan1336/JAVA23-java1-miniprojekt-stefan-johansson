@@ -16,7 +16,7 @@ public class UserInterface {
     // JPanel för att gruppera komponenter, en typ av container
     JFrame frame = new JFrame("Calender");
 
-    // Ny frame för information till varje veckodag?
+    // Konstruktor där metoderna för att skapa Kalendern och metoden för att visa kalendern körs
     public UserInterface(){
         createFrame();
         displayWeekdays();
